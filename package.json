@@ -1,0 +1,32 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "a social media platform for software engineers to share what they do, experiences of their previous companies as well as they can hire or offer themselves for various jobs",
+  "main": "backend.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon ./src/backend.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "social-media",
+    "software-engineers",
+    "programmer"
+  ],
+  "author": "Mir Kamrul Ahsan Asif",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cloudinary": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.7.0",
+    "mongoose": "^8.4.1",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.3"
+  }
+}

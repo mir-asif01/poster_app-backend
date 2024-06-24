@@ -1,0 +1,108 @@
+import { User } from "../models/user.model.js"
+import { uploadImageOnCloudinary } from "../utils/cloudinary.util.js"
+import bcrypt from "bcrypt"
+import genarateJwtToken from "../utils/genarateJWT.js"
+
+
+const registerUser = async (req, res) => {
+    try {
+        const { userName, email, password, fullName, about, currentPostion, technicalSkills, educationalInformations, facebookProfileLink, linkedInProfileLink, githubProfileLink } = req.body
+
+        const profileImagePath = req.files?.profileImage[0].path
+        const coverImagePath = req.files?.coverImage[0].path
+
+        if (!profileImagePath) res.send({ message: "Profile Image is required" })
+        if (!coverImagePath) res.send({ message: "Cover Image is required" })
+
+        const profileImageHostResponse = await uploadImageOnCloudinary(profileImagePath)
+        const coverImageHostResponse = await uploadImageOnCloudinary(coverImagePath)
+
+        const user = {
+            userName,
+            email,
+            password,
+            profileImage: profileImageHostResponse.url,
+            coverImage: coverImageHostResponse.url,
+            fullName,
+            about,
+            currentPostion,
+            technicalSkills,
+            educationalInformations,
+            facebookProfileLink,
+            linkedInProfileLink,
+            githubProfileLink,
+        }
+        const result = User.create(user)
+        res.send({ message: "user added" })
+
+
+    } catch (error) {
+        if (error) console.log(error)
+    }
+}
+
+const loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body
+        const user = await User.findOne({ email: email })
+
+        if (!user) {
+            res.send({ success: false, message: "Can not find your email..." })
+            return
+        }
+        const hashedPassword = user?.password
+        const isPasswordMatch = bcrypt.compare(password, hashedPassword)
+        if (!isPasswordMatch) {
+            res.send({ success: false, message: "Incorrect Password..." })
+            return
+        }
+
+        const token = genarateJwtToken(user?._id, user?.email)
+
+        console.log(token);
+        res.send({ success: true, message: "Login Successful...", token: token })
+
+    } catch (error) {
+        if (error) console.log(error);
+    }
+}
+
+const logoutUser = async (req, res) => {
+
+    // note for front-end ==>
+    /*
+        after the request recieved by the server, it will process the data through jwt verification middleware. and send the response containong {success and message} then in the front-end the user(login-info) will be removed which was stored previouly after login.  
+    */
+
+    try {
+        const user = req?.user
+        if (!user) {
+            res.send({ success: false, message: "Unable to login,unauthorized user data" })
+        } else {
+            res.send({ success: true, message: "logout successful" })
+        }
+    } catch (error) {
+        if (error) {
+            console.log(error)
+        }
+    }
+}
+
+const getAllUsers = async (req, res) => {
+    const users = await User.find()
+    res.send(users)
+}
+
+const friendRequestHandler = async () => {
+    try {
+        // controller code
+
+    } catch (error) {
+        if (error) {
+            console.log(error)
+        }
+    }
+}
+
+
+export { registerUser, loginUser, getAllUsers, logoutUser, friendRequestHandler }
