@@ -14,48 +14,49 @@ app.use(express.json())
 import { registerUser, loginUser, getAllUsers, logoutUser } from "./controllers/user.controller.js"
 import { upload } from "./utils/multer.util.js"
 import verifyJWT from "./middlewares/jwt.middleware.js"
+import { sendFriendRequest } from "./controllers/friend-request.controller.js"
 
 app.get("/", (req, res) => {
     res.send("backend server running!!")
 })
 
-const dummyUser = {
-    userName: "asif17",
-    email: "asif@gmai.com",
-    password: "##########",
-    fullName: "Mir Kamrul Ahsan Asif",
-    profileImage: "",
-    coverImage: "",
-    about: "i am a developer from bangladesh. currently looking for a intern or full time oppurtunity! thank you",
-    currentPosition: "N/A",
-    educationalInformations: [
-        {
-            degreeName: "Diploma in Computer",
-            passingYear: "2024"
-        },
-        {
-            degreeName: "SSC",
-            passingYear: "2020"
-        }
-    ],
-    technicalSkills: [
-        {
-            skill: "C",
-            experience: "3",
-        },
-        {
-            skill: "JavaScript",
-            experience: "3",
-        },
-        {
-            skill: "ReactJS",
-            experience: "2.5",
-        },
-    ],
-    facebookProfileLink: "",
-    githubProfileLink: "",
-    linkedInProfileLink: "",
-}
+// const dummyUser = {
+//     userName: "asif17",
+//     email: "asif@gmai.com",
+//     password: "##########",
+//     fullName: "Mir Kamrul Ahsan Asif",
+//     profileImage: "",
+//     coverImage: "",
+//     about: "i am a developer from bangladesh. currently looking for a intern or full time oppurtunity! thank you",
+//     currentPosition: "N/A",
+//     educationalInformations: [
+//         {
+//             degreeName: "Diploma in Computer",
+//             passingYear: "2024"
+//         },
+//         {
+//             degreeName: "SSC",
+//             passingYear: "2020"
+//         }
+//     ],
+//     technicalSkills: [
+//         {
+//             skill: "C",
+//             experience: "3",
+//         },
+//         {
+//             skill: "JavaScript",
+//             experience: "3",
+//         },
+//         {
+//             skill: "ReactJS",
+//             experience: "2.5",
+//         },
+//     ],
+//     facebookProfileLink: "",
+//     githubProfileLink: "",
+//     linkedInProfileLink: "",
+// }
 
 async function main() {
     const URI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.mtnbd39.mongodb.net/poster_app?retryWrites=true&w=majority&appName=Cluster0`
@@ -79,6 +80,9 @@ async function main() {
         app.post("/login", loginUser)
         app.post("/logout", verifyJWT, logoutUser)
         app.get("/users", getAllUsers)
+
+        // friend request add/cancel api endpoints
+        app.post("/add-friend", sendFriendRequest)
 
 
 
