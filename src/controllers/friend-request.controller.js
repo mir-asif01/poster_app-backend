@@ -71,6 +71,7 @@ const cancelRequest = async (req, res) => {
 
 const getAllRequestsList = async (req, res) => {
     try {
+        const userId = req.params.id
         if (!userId) {
             return res.send({ success: false, message: "User id is missing!!" })
         }
@@ -81,7 +82,6 @@ const getAllRequestsList = async (req, res) => {
     } catch (error) {
         if (error) console.log(error)
     }
-    const { userId } = req.body
 }
 
 export { sendFriendRequest, acceptRequest, cancelRequest, getAllRequestsList }
