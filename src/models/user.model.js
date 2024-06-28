@@ -60,7 +60,12 @@ const userSchema = new mongoose.Schema(
         },
         githubProfileLink: {
             type: String,
-        }
+        },
+        friends: [
+            {
+                friendId: String
+            }
+        ]
     },
     {
         timestamps: true
