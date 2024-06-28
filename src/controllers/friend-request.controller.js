@@ -69,4 +69,19 @@ const cancelRequest = async (req, res) => {
     }
 }
 
-export { sendFriendRequest, acceptRequest, cancelRequest }
+const getAllRequestsList = async (req, res) => {
+    try {
+        if (!userId) {
+            return res.send({ success: false, message: "User id is missing!!" })
+        }
+        else {
+            const allRequest = await FriendRequest.find({ recieverId: userId })
+            res.send({ success: true, message: "All request list sent", allRequest: allRequest })
+        }
+    } catch (error) {
+        if (error) console.log(error)
+    }
+    const { userId } = req.body
+}
+
+export { sendFriendRequest, acceptRequest, cancelRequest, getAllRequestsList }
