@@ -14,7 +14,7 @@ app.use(express.json())
 import { registerUser, loginUser, getAllUsers, logoutUser } from "./controllers/user.controller.js"
 import { upload } from "./utils/multer.util.js"
 import verifyJWT from "./middlewares/jwt.middleware.js"
-import { acceptRequest, sendFriendRequest } from "./controllers/friend-request.controller.js"
+import { acceptRequest, cancelRequest, sendFriendRequest } from "./controllers/friend-request.controller.js"
 
 app.get("/", (req, res) => {
     res.send("backend server running!!")
@@ -84,6 +84,7 @@ async function main() {
         // friend request add/cancel api endpoints
         app.post("/add-friend", sendFriendRequest)
         app.post("/accept-request", acceptRequest)
+        app.post("/cancel-request", cancelRequest)
 
 
 

@@ -1,11 +1,7 @@
 import { FriendRequest } from "../models/friend-request.model.js"
 import { User } from "../models/user.model.js"
 
-// const requsetModel = {
-//     senderId,
-//     recieverId,
-//     status
-// }
+
 const sendFriendRequest = async (req, res) => {
 
     try {
@@ -56,5 +52,21 @@ const acceptRequest = async (req, res) => {
     }
 }
 
+const cancelRequest = async (req, res) => {
+    try {
+        const { requestId } = req.body
+        if (!requestId) {
+            return res.send({ success: false, message: "requestId is missing!!" })
+        }
+        else {
+            const request = await FriendRequest.findById(requestId)
+            request.status = "rejected"
+            request.save({ validateBeforeSave: false })
+            res.send({ success: true, message: "Request delted!" })
+        }
+    } catch (error) {
+        if (error) console.log(error);
+    }
+}
 
-export { sendFriendRequest, acceptRequest }
+export { sendFriendRequest, acceptRequest, cancelRequest }
