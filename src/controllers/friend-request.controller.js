@@ -13,12 +13,18 @@ const sendFriendRequest = async (req, res) => {
             senderId,
             recieverId
         }
-        console.log(friendRequest);
+        const isRequestExist = await FriendRequest.findOne({ senderId: senderId, recieverId: recieverId })
+        if (isRequestExist) {
+            return res.send({ success: false, message: "Already sent request!" })
+
+        }
         if (!senderId) {
-            res.send({ success: false, message: "sender Id is missing" })
+            return res.send({ success: false, message: "sender Id is missing" })
+
         }
         if (!recieverId) {
-            res.send({ success: false, message: "reciever Id is missing" })
+            return res.send({ success: false, message: "reciever Id is missing" })
+
         }
         else {
             const result = await FriendRequest.create(friendRequest)
