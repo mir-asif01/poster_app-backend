@@ -40,12 +40,16 @@ const acceptRequest = async (req, res) => {
             return res.send({ success: false, message: "Credentials missing" })
         }
         const request = await FriendRequest.findById(id)
-        request.status = "accepted"
-        request.save({ validateBeforeSave: false })
+        if (request) {
+            request.status = "accepted"
+            request.save({ validateBeforeSave: false })
+        }
         const requestReciever = await User.findById(recieverId)
-        requestReciever.friends.push(senderId)
-
-        res.send({ success: true, message: "Added to friend list" })
+        if (requestReciever) {
+            requestReciever.friends.push(senderId)
+            requestReciever.save({ validateBeforeSave: false })
+            res.send({ success: true, message: "Added to friend list" })
+        }
 
     } catch (error) {
         if (error) console.log(error)

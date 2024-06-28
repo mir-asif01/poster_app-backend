@@ -17,7 +17,7 @@ const registerUser = async (req, res) => {
         const profileImageHostResponse = await uploadImageOnCloudinary(profileImagePath)
         const coverImageHostResponse = await uploadImageOnCloudinary(coverImagePath)
 
-        const user = {
+        const user = await User.create({
             userName,
             email,
             password,
@@ -31,9 +31,8 @@ const registerUser = async (req, res) => {
             facebookProfileLink,
             linkedInProfileLink,
             githubProfileLink,
-        }
-        const result = User.create(user)
-        res.send({ message: "user added" })
+        })
+        res.send({ success: true, message: "user added" })
 
 
     } catch (error) {
