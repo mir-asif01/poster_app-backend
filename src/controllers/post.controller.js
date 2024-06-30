@@ -51,8 +51,12 @@ const getPostsForPostsPage = async (req,res) =>{
 
 const getPostsAddedByUser = async(req,res)=>{
     try {
-        const email = req.query?.params
-        console.log(email);
+        const email = req.query?.email
+        if(!email){
+            return res.send({success : false, message : "Email not found"})
+        }
+        const posts = await Post.find({email : email})
+        res.send({success:true, message:`Found ${posts.length ? posts?.length : 0} posts`, posts})
     } catch (error) {
         if(error) console.log(error);
     }
