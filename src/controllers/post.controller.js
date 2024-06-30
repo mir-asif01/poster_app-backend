@@ -3,8 +3,8 @@ import { uploadImageOnCloudinary } from "../utils/cloudinary.util.js";
 
 const createPost = async (req,res)=>{
     try {
-        const {title,summary,content} = req.body
-        if(!(title || summary || content)){
+        const {email,title,summary,content} = req.body
+        if(!(email,title || summary || content)){
             return res.send({success:true,message:"Fields can not be empty!!"});
         }
 
@@ -14,9 +14,9 @@ const createPost = async (req,res)=>{
         }
 
         const postImageHost = await uploadImageOnCloudinary(postImageFile);
-        console.log({title, image : postImageHost?.url, summary,content});
 
         const post = await Post.create({
+            email,
             title,
             postImage : postImageHost?.url,
             summary,
