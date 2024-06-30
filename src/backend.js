@@ -15,6 +15,7 @@ import { registerUser, loginUser, getAllUsers, logoutUser } from "./controllers/
 import { upload } from "./utils/multer.util.js"
 import verifyJWT from "./middlewares/jwt.middleware.js"
 import { acceptRequest, cancelRequest, getAllRequestsList, sendFriendRequest } from "./controllers/friend-request.controller.js"
+import { addOneLike, createPost } from "./controllers/post.controller.js"
 
 app.get("/", (req, res) => {
     res.send("backend server running!!")
@@ -88,6 +89,10 @@ async function main() {
 
         // fetch all requests for friend request page
         app.get("/all-request/:id", getAllRequestsList)
+        
+        // post related routes
+        app.post("/create-post", upload.single("postImage"),createPost)
+        app.post("/add-one-like",addOneLike)
 
 
 

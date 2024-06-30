@@ -6,7 +6,7 @@ const postSchema = new mongoose.Schema(
             type : String,
             required : true 
         },
-        image : {
+        postImage : {
             type : String,
             required : true
         },
@@ -19,7 +19,8 @@ const postSchema = new mongoose.Schema(
             required : true
         },
         likes : { 
-            type : Number
+            type : Number,
+            default : 0
         }
     },
     {
@@ -27,4 +28,4 @@ const postSchema = new mongoose.Schema(
     }
 )
 
-export const Post = mongoose.Model("Post",postSchema)
+export const Post = mongoose.model("Post",postSchema)
