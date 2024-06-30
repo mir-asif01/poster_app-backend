@@ -65,7 +65,12 @@ const getPostsAddedByUser = async(req,res)=>{
 
 const deletePost = async(req,res) =>{
     try {
-        
+        const postId = req.params;
+        if(!postId){
+            return res.send({success:false,message:"Post id not found"})
+        }
+        const deletePost = await Post.findByIdAndDelete(postId)
+        res.send({success:true,message:"Post deleted successfully",deletePost}) 
     } catch (error) {
         if(error) console.log(error);
     }
