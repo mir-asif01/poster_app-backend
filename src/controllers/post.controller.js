@@ -43,7 +43,8 @@ const addOneLike = async (req,res)=>{
 
 const getPostsForPostsPage = async (req,res) =>{
     try {
-        
+        const posts = await Post.find()
+        res.send({success:true,message:`Found ${posts.length ? posts?.length : 0} posts in database`,posts})
     } catch (error) {
         if(error) console.log(error);
     }
