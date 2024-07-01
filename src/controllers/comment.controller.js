@@ -29,4 +29,13 @@ const getAllComments = async (req,res) => {
     }
 }
 
+const getAllCommentUserAdded = async (req,res) =>{
+    try {
+        const email = req?.query
+        const comments = await Comment.find({})
+    } catch (error) {
+        if(error) console.log(error);
+    }
+}
+
 export {addComment,getAllComments}
