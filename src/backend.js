@@ -16,7 +16,7 @@ import { upload } from "./utils/multer.util.js"
 import verifyJWT from "./middlewares/jwt.middleware.js"
 import { acceptRequest, cancelRequest, getAllRequestsList, sendFriendRequest } from "./controllers/friend-request.controller.js"
 import { addOneLike, createPost, getPostsAddedByUser, getPostsForPostsPage } from "./controllers/post.controller.js"
-import { addComment } from "./controllers/comment.controller.js"
+import { addComment, getAllComments } from "./controllers/comment.controller.js"
 
 app.get("/", (req, res) => {
     res.send("backend server running!!")
@@ -99,6 +99,7 @@ async function main() {
 
         // comment adding api
         app.post("/add-comment",addComment)
+        app.get("/all-comments", getAllComments)
 
     } catch (error) {
         if (error) console.log(error)

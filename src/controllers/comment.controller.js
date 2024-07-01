@@ -29,4 +29,4 @@ const getAllComments = async (req,res) => {
     }
 }
 
-export {addComment}
+export {addComment,getAllComments}
