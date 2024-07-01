@@ -20,4 +20,13 @@ const addComment = async(req,res) => {
  }
 }
 
+const getAllComments = async (req,res) => {
+    try {
+        const comments = await Comment.find()
+        res.send({success:true,message: "All comments sent!!" })
+    } catch (error) {
+        if(error) console.log(error);
+    }
+}
+
 export {addComment}
