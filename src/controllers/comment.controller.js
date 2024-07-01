@@ -2,13 +2,14 @@ import { Comment } from "../models/comment.model.js"
 
 const addComment = async(req,res) => {
  try {
-    const {postId,comment} = req.body
-    if(!(postId || comment)){
+    const {postId,userEmail,comment} = req.body
+    if(!(postId || userEmail || comment)){
         return res.send({success:false, nessage:"Credentials misssing!!"})
     }
     const commentInsert = await Comment.create(
         {
             postId,
+            userEmail,
             comment
         }
     )
@@ -32,10 +33,14 @@ const getAllComments = async (req,res) => {
 const getAllCommentUserAdded = async (req,res) =>{
     try {
         const email = req?.query
-        const comments = await Comment.find({})
+        if(!email){
+            return res.send({success:false,message:"User email is missing"})
+        }
+        const comments = await Comment.find({userEmail : email})
+        res.send({success : true, message:"All comments you added!!",comments:comments})
     } catch (error) {
         if(error) console.log(error);
     }
 }
 
-export {addComment,getAllComments}
+export {addComment,getAllComments,getAllCommentUserAdded}
