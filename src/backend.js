@@ -81,26 +81,26 @@ async function main() {
         ]), registerUser)
         app.post("/login", loginUser)
         app.post("/logout", verifyJWT, logoutUser)
-        app.get("/users", getAllUsers)
+        app.get("/users",verifyJWT, getAllUsers)
 
         // friend request add/cancel api endpoints
-        app.post("/add-friend", sendFriendRequest)
-        app.post("/accept-request", acceptRequest)
-        app.post("/cancel-request", cancelRequest)
+        app.post("/add-friend",verifyJWT, sendFriendRequest)
+        app.post("/accept-request",verifyJWT, acceptRequest)
+        app.post("/cancel-request",verifyJWT, cancelRequest)
 
         // fetch all requests for friend request page
-        app.get("/all-request/:id", getAllRequestsList)
+        app.get("/all-request/:id",verifyJWT, getAllRequestsList)
         
         // post related routes
-        app.post("/create-post", upload.single("postImage"),createPost)
-        app.post("/add-one-like",addOneLike)
-        app.get("/posts-by-user",getPostsAddedByUser)
-        app.get("/posts",getPostsForPostsPage)
+        app.post("/create-post",verifyJWT, upload.single("postImage"),createPost)
+        app.post("/add-one-like",verifyJWT,addOneLike)
+        app.get("/posts-by-user",verifyJWT,getPostsAddedByUser)
+        app.get("/posts",verifyJWT,getPostsForPostsPage)
 
         // comment adding api
-        app.post("/add-comment",addComment)
-        app.get("/all-comments", getAllComments)
-        app.get("/all-user-comments", getAllCommentUserAdded)
+        app.post("/add-comment",verifyJWT,addComment)
+        app.get("/all-comments", verifyJWT,getAllComments)
+        app.get("/all-user-comments",verifyJWT, getAllCommentUserAdded)
 
     } catch (error) {
         if (error) console.log(error)

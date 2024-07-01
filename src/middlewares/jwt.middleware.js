@@ -7,16 +7,9 @@ const verifyJWT = async (req, res, next) => {
         if (!token) {
             console.log("token not found");
         }
-        console.log("token : ", token);
         const jwt_payload = await jwt.verify(token, process.env.JWT_SECRET)
-        console.log("payload : ", jwt_payload);
         const user = await User.findById(jwt_payload._id).select("-password")
-        console.log("user : ", user)
-        // if (!user) {
-        //     res.send({ message: "user not found" })
-        // }
-
-        // req.user = user
+        req.user = user
         next()
 
     } catch (error) {

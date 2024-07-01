@@ -67,16 +67,10 @@ const loginUser = async (req, res) => {
 }
 
 const logoutUser = async (req, res) => {
-
-    // note for front-end ==>
-    /*
-        after the request recieved by the server, it will process the data through jwt verification middleware. and send the response containong {success and message} then in the front-end the user(login-info) will be removed which was stored previouly after login.  
-    */
-
     try {
         const user = req?.user
         if (!user) {
-            res.send({ success: false, message: "Unable to login,unauthorized user data" })
+            res.send({ success: false, message: "Unable to logout,unauthorized user data" })
         } else {
             res.send({ success: true, message: "logout successful" })
         }
@@ -92,16 +86,5 @@ const getAllUsers = async (req, res) => {
     res.send(users)
 }
 
-const friendRequestHandler = async () => {
-    try {
-        // controller code
 
-    } catch (error) {
-        if (error) {
-            console.log(error)
-        }
-    }
-}
-
-
-export { registerUser, loginUser, getAllUsers, logoutUser, friendRequestHandler }
+export { registerUser, loginUser, getAllUsers, logoutUser}
