@@ -11,7 +11,7 @@ app.use(cors())
 app.use(express.json())
 
 //controllers import 
-import { registerUser, loginUser, getAllUsers, logoutUser } from "./controllers/user.controller.js"
+import { registerUser, loginUser, getAllUsers } from "./controllers/user.controller.js"
 import { upload } from "./utils/multer.util.js"
 import verifyJWT from "./middlewares/jwt.middleware.js"
 import { acceptRequest, cancelRequest, getAllRequestsList, sendFriendRequest } from "./controllers/friend-request.controller.js"
@@ -80,7 +80,6 @@ async function main() {
             }
         ]), registerUser)
         app.post("/login", loginUser)
-        app.post("/logout", verifyJWT, logoutUser)
         app.get("/users",verifyJWT, getAllUsers)
 
         // friend request add/cancel api endpoints

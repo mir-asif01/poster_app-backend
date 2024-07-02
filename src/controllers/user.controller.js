@@ -43,7 +43,7 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body
-        const user = await User.findOne({ email: email })
+        const user = await User.findOne({ email: email }).select("-password")
 
         if (!user) {
             res.send({ success: false, message: "Can not find your email..." })
@@ -59,25 +59,10 @@ const loginUser = async (req, res) => {
         const token = genarateJwtToken(user?._id, user?.email)
 
         console.log(token);
-        res.send({ success: true, message: "Login Successful...", token: token })
+        res.send({ success: true, message: "Login Successful...", token: token ,user: user})
 
     } catch (error) {
         if (error) console.log(error);
-    }
-}
-
-const logoutUser = async (req, res) => {
-    try {
-        const user = req?.user
-        if (!user) {
-            res.send({ success: false, message: "Unable to logout,unauthorized user data" })
-        } else {
-            res.send({ success: true, message: "logout successful" })
-        }
-    } catch (error) {
-        if (error) {
-            console.log(error)
-        }
     }
 }
 
@@ -87,4 +72,4 @@ const getAllUsers = async (req, res) => {
 }
 
 
-export { registerUser, loginUser, getAllUsers, logoutUser}
+export { registerUser, loginUser, getAllUsers}
