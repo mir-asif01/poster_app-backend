@@ -1,22 +1,5 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt"
-import jwt from "jsonwebtoken"
-
-// single value schema for technical skills field
-const skillSchema = new mongoose.Schema(
-    {
-        skill: String,
-        experience: String
-    }
-)
-
-// single value schema for educational qualifications field
-const educationSchema = new mongoose.Schema(
-    {
-        degreeName: String,
-        passingYear: String
-    }
-)
 
 const userSchema = new mongoose.Schema(
     {
@@ -48,6 +31,10 @@ const userSchema = new mongoose.Schema(
         coverImage: {
             type: String,
             required: true
+        },
+        technicalSkills:{
+            type : String,
+            required:true
         },
         currentPostion: {
             type: String,

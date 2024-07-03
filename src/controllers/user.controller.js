@@ -27,7 +27,6 @@ const registerUser = async (req, res) => {
             about,
             currentPostion,
             technicalSkills,
-            educationalInformations,
             facebookProfileLink,
             linkedInProfileLink,
             githubProfileLink,
