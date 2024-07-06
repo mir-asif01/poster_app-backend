@@ -104,6 +104,7 @@ const deletePost = async (req, res) => {
 
 export {
   createPost,
+  getSinglePost,
   addOneLike,
   deletePost,
   getPostsForPostsPage,
