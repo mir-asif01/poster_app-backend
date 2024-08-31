@@ -2,15 +2,6 @@ import express from "express"
 import cors from "cors"
 import dotenv from "dotenv"
 import mongoose from "mongoose"
-
-const app = express()
-const port = 3000
-
-dotenv.config()
-app.use(cors())
-app.use(express.json())
-
-//controllers import
 import {
    registerUser,
    loginUser,
@@ -36,6 +27,15 @@ import {
    getAllCommentUserAdded,
    getAllComments,
 } from "./controllers/comment.controller.js"
+
+const app = express()
+const port = 3000
+
+dotenv.config()
+app.use(cors())
+app.use(express.json())
+
+//controllers import
 
 app.get("/", (req, res) => {
    res.send("backend server running!!")
