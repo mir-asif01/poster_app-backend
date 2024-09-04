@@ -56,26 +56,21 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body
-    const user = await User.findOne({ email: email }).select("-password")
+    const user = await User.findOne({ email: email })
 
     if (!user) {
-      res.send({ success: false, message: "Can not find your email..." })
-      return
+      return res.send({ success: false, message: "Can not find your email..." })
     }
-    const hashedPassword = user?.password
-    const isPasswordMatch = bcrypt.compare(password, hashedPassword)
+
+    const isPasswordMatch = await bcrypt.compare(password, user?.password)
+
     if (!isPasswordMatch) {
-      res.send({ success: false, message: "Incorrect Password..." })
-      return
+      return res.send({ success: false, message: "Incorrect Password..." })
     }
 
-    const token = genarateJwtToken(user?._id, user?.email)
-
-    console.log(token)
     res.send({
       success: true,
       message: "Login Successful...",
-      token: token,
       user: user,
     })
   } catch (error) {
