@@ -83,4 +83,13 @@ const getAllUsers = async (req, res) => {
   res.send(users)
 }
 
-export { registerUser, loginUser, getAllUsers }
+const updateUserInformation = async (req, res) => {
+  try {
+  } catch (error) {
+    if (error) {
+      console.log(error)
+    }
+  }
+}
+
+export { registerUser, loginUser, getAllUsers, updateUserInformation }
