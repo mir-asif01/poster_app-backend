@@ -1,3 +1,4 @@
+import mongoose from "mongoose"
 import { Post } from "../models/post.model.js"
 import { uploadImageOnCloudinary } from "../utils/cloudinary.util.js"
 
@@ -57,7 +58,7 @@ const getSinglePost = async (req, res) => {
     if (!postId) {
       return res.send({ success: false, message: "post id not found" })
     }
-    const post = await Post.findById(postId)
+    const post = await Post.findById(new mongoose.Types.ObjectId(postId))
     res.send({ success: true, message: "post found", post: post })
   } catch (error) {
     if (error) {
