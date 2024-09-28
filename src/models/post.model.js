@@ -18,6 +18,14 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    tags: {
+      type: [String],
+      required: true,
+    },
+    creatorId: {
+      type: String,
+      required: true,
+    },
     creatorName: {
       type: String,
       required: true,
