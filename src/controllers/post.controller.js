@@ -132,8 +132,19 @@ const deletePost = async (req, res) => {
 
 const searchPost = async (req, res) => {
   try {
-    // search keyword will be passed via query params
-    // query params structure ---> ?search_keyword=javascript,golang
+    const keyword = req.query.search_keyword
+    if (!keyword) {
+      console.log("Query keyword not found")
+    }
+    const posts = await Post.find()
+    const result = []
+    posts.map((post) => {
+      if (post.tags[0].includes(keyword)) {
+        result.push(post)
+      }
+    })
+    // console.log(result)
+    res.send({ posts: result })
   } catch (error) {
     console.log(error)
   }
