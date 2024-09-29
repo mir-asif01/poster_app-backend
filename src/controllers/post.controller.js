@@ -8,6 +8,8 @@ const createPost = async (req, res) => {
       title,
       summary,
       content,
+      tags,
+      creatorId,
       creatorName,
       creatorProfileImage,
       creatorCurrentPosition,
@@ -17,6 +19,7 @@ const createPost = async (req, res) => {
         title ||
         summary ||
         content ||
+        tags ||
         creatorName ||
         creatorCurrentPosition ||
         creatorProfileImage
@@ -37,6 +40,8 @@ const createPost = async (req, res) => {
       postImage: postImageHost?.url,
       summary,
       content,
+      tags,
+      creatorId,
       creatorName,
       creatorProfileImage,
       creatorCurrentPosition,
@@ -133,3 +138,18 @@ export {
   getPostsForPostsPage,
   getPostsAddedByUser,
 }
+
+/*
+
+{
+  "_id" : 1,
+  "title" : "title",
+  "tags" : ["tag1","tag2"] 
+}
+
+->
+  db.collection.find({
+    tags: { $in: ["tag1", "tag2"] }
+  })
+
+*/
