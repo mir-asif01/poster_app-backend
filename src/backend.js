@@ -21,6 +21,7 @@ import {
   getPostsAddedByUser,
   getPostsForPostsPage,
   getSinglePost,
+  searchPost,
 } from "./controllers/post.controller.js"
 import {
   addComment,
@@ -81,6 +82,7 @@ async function main() {
     app.post("/add-one-like", addOneLike)
     app.get("/posts-by-user", getPostsAddedByUser)
     app.get("/posts", getPostsForPostsPage)
+    app.get("/search-post", searchPost) // search keyword will be passed via query params
 
     // comment adding api
     app.post("/add-comment", addComment)

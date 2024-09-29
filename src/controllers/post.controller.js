@@ -130,6 +130,15 @@ const deletePost = async (req, res) => {
   }
 }
 
+const searchPost = async (req, res) => {
+  try {
+    // search keyword will be passed via query params
+    // query params structure ---> ?search_keyword=javascript,golang
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export {
   createPost,
   getSinglePost,
@@ -137,6 +146,7 @@ export {
   deletePost,
   getPostsForPostsPage,
   getPostsAddedByUser,
+  searchPost,
 }
 
 /*
