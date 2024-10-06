@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    currentPostion: {
+    currentPosition: {
       type: String,
     },
     facebookProfileLink: {

@@ -143,7 +143,6 @@ const searchPost = async (req, res) => {
         result.push(post)
       }
     })
-    // console.log(result)
     res.send({ posts: result })
   } catch (error) {
     console.log(error)
@@ -159,18 +158,3 @@ export {
   getPostsAddedByUser,
   searchPost,
 }
-
-/*
-
-{
-  "_id" : 1,
-  "title" : "title",
-  "tags" : ["tag1","tag2"] 
-}
-
-->
-  db.collection.find({
-    tags: { $in: ["tag1", "tag2"] }
-  })
-
-*/

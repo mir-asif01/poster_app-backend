@@ -11,7 +11,7 @@ const registerUser = async (req, res) => {
       password,
       fullName,
       about,
-      currentPostion,
+      currentPosition,
       technicalSkills,
       facebookProfileLink,
       linkedInProfileLink,
@@ -41,13 +41,13 @@ const registerUser = async (req, res) => {
       coverImage: coverImageHostResponse.url,
       fullName,
       about,
-      currentPostion,
+      currentPosition,
       technicalSkills,
       facebookProfileLink,
       linkedInProfileLink,
       githubProfileLink,
     })
-    return res.send({ success: true, message: "user added" })
+    return res.send({ user: user, success: true, message: "user added" })
   } catch (error) {
     if (error) console.log(error)
   }
@@ -70,8 +70,8 @@ const loginUser = async (req, res) => {
 
     res.send({
       success: true,
-      message: "Login Successful...",
       user: user,
+      message: "Login Successful...",
     })
   } catch (error) {
     if (error) console.log(error)
