@@ -97,5 +97,5 @@ async function main() {
 main().catch((err) => console.log(err))
 
 app.listen(port, () => {
-  console.log(`App is running on http://localhost:3000`)
+  console.log(`App is running on http://localhost:${port}`)
 })
