@@ -1,19 +1,18 @@
-import mongoose from "mongoose"
+import mongoose, { Schema } from "mongoose"
 
 const commentSchema = new mongoose.Schema(
   {
-    // postId is the type of ObjectId and it will refer to the Posts model
-    postId: {
-      type: String,
-      required: true,
-    },
-    userEmail: {
-      type: String,
-      required: true,
-    },
     comment: {
       type: String,
       required: true,
+    },
+    post: {
+      type: Schema.Types.ObjectId,
+      ref: "Post",
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
   },
   {
