@@ -67,13 +67,3 @@ userSchema.pre("save", async function (next) {
 })
 
 export const User = mongoose.model("User", userSchema)
-
-/* 
-technicalSkills: {
-            type: [skillSchema],
-        },
-        educationalInformations: {
-            type: [educationSchema],
-        },
-
-*/
