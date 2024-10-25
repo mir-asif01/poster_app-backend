@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 import { Post } from "../models/post.model.js"
 import { uploadImageOnCloudinary } from "../utils/cloudinary.util.js"
+import { Likes } from "../models/likes.model.js"
 
 const createPost = async (req, res) => {
   try {
@@ -63,7 +64,32 @@ const getSinglePost = async (req, res) => {
     if (!postId) {
       return res.send({ success: false, message: "post id not found" })
     }
-    const post = await Post.findById(new mongoose.Types.ObjectId(postId))
+    const pipelineResult = await Post.aggregate([
+      {
+        $match: {
+          _id: new mongoose.Types.ObjectId(postId),
+        },
+      },
+      {
+        $lookup: {
+          from: "likes",
+          localField: "_id",
+          foreignField: "likedPost",
+          as: "likes",
+        },
+      },
+      {
+        $addFields: {
+          likesCount: { $size: "$likes" },
+        },
+      },
+      {
+        $project: {
+          likes: 0,
+        },
+      },
+    ])
+    const post = pipelineResult[0]
     res.send({ success: true, message: "post found", post: post })
   } catch (error) {
     if (error) {
@@ -73,14 +99,23 @@ const getSinglePost = async (req, res) => {
 }
 
 const addOneLike = async (req, res) => {
-  const { postId } = req.body
-  if (!postId) {
-    return res.send({ success: false, message: "Post ID not found!" })
+  const { postId, userId } = req.body
+  console.log(postId, userId)
+  if (!postId || !userId) {
+    return res.send({ success: false, message: "PostId/UserId not found!" })
   }
-  const post = await Post.findById(postId)
-  post.likes += 1
-  post.save({ validateBeforeSave: false })
-  res.send({ success: true, message: "Like added!!" })
+  const isLiked = await Likes.findOne({
+    likedBy: userId,
+    likedPost: postId,
+  })
+  if (isLiked) {
+    return res.send({ success: false, message: "You already liked the post" })
+  }
+  await Likes.create({
+    likedBy: userId,
+    likedPost: postId,
+  })
+  return res.send({ success: true, message: "like added" })
 }
 
 const getPostsForPostsPage = async (req, res) => {
