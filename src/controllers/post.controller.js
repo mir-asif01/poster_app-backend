@@ -2,6 +2,7 @@ import mongoose from "mongoose"
 import { Post } from "../models/post.model.js"
 import { uploadImageOnCloudinary } from "../utils/cloudinary.util.js"
 import { Likes } from "../models/likes.model.js"
+import { ObjectId } from "mongodb"
 
 const createPost = async (req, res) => {
   try {
@@ -100,16 +101,22 @@ const getSinglePost = async (req, res) => {
 
 const addOneLike = async (req, res) => {
   const { postId, userId } = req.body
-  console.log(postId, userId)
   if (!postId || !userId) {
     return res.send({ success: false, message: "PostId/UserId not found!" })
   }
-  const isLiked = await Likes.findOne({
+  const postThatWasLiked = await Likes.find({
     likedBy: userId,
     likedPost: postId,
   })
-  if (isLiked) {
-    return res.send({ success: false, message: "You already liked the post" })
+  let postWasLiked = false
+
+  postThatWasLiked.forEach((post) => {
+    if (post.likedBy.equals(new ObjectId(userId))) {
+      postWasLiked = true
+    }
+  })
+  if (postWasLiked) {
+    return res.send({ success: false, message: "like already added" })
   }
   await Likes.create({
     likedBy: userId,
