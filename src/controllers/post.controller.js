@@ -170,8 +170,38 @@ const getPostsAddedByUser = async (req, res) => {
     if (!id) {
       return res.send({ success: false, message: "Email not found" })
     }
-    const posts = await Post.find({ creatorId: id })
-    res.send({
+    const posts = await Post.aggregate([
+      {
+        $match: {
+          creatorId: id,
+        },
+      },
+      {
+        $lookup: {
+          from: "likes",
+          localField: "_id",
+          foreignField: "likedPost",
+          as: "likes",
+        },
+      },
+      {
+        $addFields: {
+          likesCount: { $size: "$likes" },
+        },
+      },
+      {
+        $project: {
+          likes: 0,
+        },
+      },
+    ])
+    if (!posts) {
+      return res.send({
+        success: false,
+        message: "You have not posted anything",
+      })
+    }
+    return res.send({
       success: true,
       message: `Found ${posts.length ? posts?.length : 0} posts`,
       posts,
