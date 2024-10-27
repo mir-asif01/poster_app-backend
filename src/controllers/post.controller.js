@@ -234,14 +234,41 @@ const searchPost = async (req, res) => {
     if (!keyword) {
       console.log("Query keyword not found")
     }
-    const posts = await Post.find()
+    const posts = await Post.aggregate([
+      {
+        $lookup: {
+          from: "likes",
+          localField: "_id",
+          foreignField: "likedPost",
+          as: "likes",
+        },
+      },
+      {
+        $addFields: {
+          likesCount: { $size: "$likes" },
+        },
+      },
+      {
+        $project: {
+          likes: 0,
+        },
+      },
+    ])
     const result = []
     posts.map((post) => {
       if (post.tags[0].includes(keyword)) {
         result.push(post)
       }
     })
-    res.send({ posts: result })
+    if (!result) {
+      return res.send({ success: false, message: "no search result found!" })
+    }
+
+    return res.send({
+      success: true,
+      message: `${result.length} number of search result found`,
+      posts: result,
+    })
   } catch (error) {
     console.log(error)
   }
