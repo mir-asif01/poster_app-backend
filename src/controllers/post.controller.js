@@ -105,24 +105,28 @@ const addOneLike = async (req, res) => {
     return res.send({ success: false, message: "PostId/UserId not found!" })
   }
   const postThatWasLiked = await Likes.find({
-    likedBy: userId,
     likedPost: postId,
   })
+
   let postWasLiked = false
 
-  postThatWasLiked.forEach((post) => {
+  postThatWasLiked.map((post) => {
     if (post.likedBy.equals(new ObjectId(userId))) {
       postWasLiked = true
     }
   })
+
   if (postWasLiked) {
-    return res.send({ success: false, message: "like already added" })
+    return res.send({ success: false, message: "You already liked the post" })
+    // console.log("already liked")
   }
   await Likes.create({
     likedBy: userId,
     likedPost: postId,
   })
   return res.send({ success: true, message: "like added" })
+
+  // console.log("post liked")
 }
 
 const getPostsForPostsPage = async (req, res) => {
@@ -162,11 +166,11 @@ const getPostsForPostsPage = async (req, res) => {
 
 const getPostsAddedByUser = async (req, res) => {
   try {
-    const email = req.query?.email
-    if (!email) {
+    const id = req.query?.id
+    if (!id) {
       return res.send({ success: false, message: "Email not found" })
     }
-    const posts = await Post.find({ email: email })
+    const posts = await Post.find({ creatorId: id })
     res.send({
       success: true,
       message: `Found ${posts.length ? posts?.length : 0} posts`,
