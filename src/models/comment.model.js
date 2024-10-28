@@ -6,13 +6,17 @@ const commentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    post: {
-      type: Schema.Types.ObjectId,
-      ref: "Post",
+    postId: {
+      type: String,
+      required: true,
     },
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
+    commentorName: {
+      type: String,
+      required: true,
+    },
+    commentorProfileImage: {
+      type: String,
+      required: true,
     },
   },
   {

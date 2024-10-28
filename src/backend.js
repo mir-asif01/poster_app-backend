@@ -28,6 +28,7 @@ import {
   addComment,
   getAllCommentUserAdded,
   getAllComments,
+  getCommentsForPostDetailsPage,
 } from "./controllers/comment.controller.js"
 
 const app = express()
@@ -88,6 +89,7 @@ async function main() {
 
     // comment adding api
     app.post("/add-comment", addComment)
+    app.get("/comments-for-post", getCommentsForPostDetailsPage)
     app.get("/all-comments", getAllComments)
     app.get("/all-user-comments", getAllCommentUserAdded)
   } catch (error) {
