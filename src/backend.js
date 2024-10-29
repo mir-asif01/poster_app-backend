@@ -11,12 +11,6 @@ import {
 import { upload } from "./utils/multer.util.js"
 import verifyJWT from "./middlewares/jwt.middleware.js"
 import {
-  acceptRequest,
-  cancelRequest,
-  getAllRequestsList,
-  sendFriendRequest,
-} from "./controllers/friend-request.controller.js"
-import {
   addOneLike,
   createPost,
   getPostsAddedByUser,
@@ -70,14 +64,6 @@ async function main() {
     app.post("/login", loginUser)
     app.get("/users", getAllUsers)
     app.get("/users/:id", getSingleUser)
-
-    // friend request add/cancel api endpoints
-    app.post("/add-friend", sendFriendRequest)
-    app.post("/accept-request", acceptRequest)
-    app.post("/cancel-request", cancelRequest)
-
-    // fetch all requests for friend request page
-    app.get("/all-request/:id", getAllRequestsList)
 
     // post related routes
     app.post("/create-post", upload.single("postImage"), createPost)

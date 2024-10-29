@@ -173,7 +173,7 @@ const getPostsAddedByUser = async (req, res) => {
     const posts = await Post.aggregate([
       {
         $match: {
-          creatorId: id,
+          creatorId: new mongoose.Types.ObjectId(id),
         },
       },
       {
