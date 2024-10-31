@@ -214,12 +214,12 @@ const getPostsAddedByUser = async (req, res) => {
 
 const deletePost = async (req, res) => {
   try {
-    const postId = req.params
-    if (!postId) {
+    const id = req.params.id
+    if (!id) {
       return res.send({ success: false, message: "Post id not found" })
     }
-    const deletePost = await Post.findByIdAndDelete(postId)
-    res.send({
+    const deletePost = await Post.findByIdAndDelete(id)
+    return res.send({
       success: true,
       message: "Post deleted successfully",
       deletePost,
