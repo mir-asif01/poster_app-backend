@@ -1,0 +1,5 @@
+backend development server - http://localhost:3000/ 
+backend live server - https://poster-app-backend.onrender.com/
+
+frontend development server - http://localhost:5173/
+frontend live server - https://poster-app-fontend-hdse0iur2-mirasif01s-projects.vercel.app/
