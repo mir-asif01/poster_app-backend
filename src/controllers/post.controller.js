@@ -3,6 +3,7 @@ import { Post } from "../models/post.model.js"
 import { uploadImageOnCloudinary } from "../utils/cloudinary.util.js"
 import { Likes } from "../models/likes.model.js"
 import { ObjectId } from "mongodb"
+import { v2 as cloudinary } from "cloudinary"
 
 const createPost = async (req, res) => {
   try {
@@ -36,10 +37,10 @@ const createPost = async (req, res) => {
     }
 
     const postImageHost = await uploadImageOnCloudinary(postImageFile)
-
     const post = await Post.create({
       title,
       postImage: postImageHost?.url,
+      postImageCloudinaryPublicId: postImageHost?.public_id,
       summary,
       content,
       tags,
@@ -228,6 +229,8 @@ const deletePost = async (req, res) => {
     if (!id) {
       return res.send({ success: false, message: "Post id not found" })
     }
+    const post = await Post.findById(id)
+    await cloudinary.uploader.destroy(post?.postImageCloudinaryPublicId)
     const deletePost = await Post.findByIdAndDelete(id)
     return res.send({
       success: true,
