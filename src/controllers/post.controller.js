@@ -205,6 +205,7 @@ const getPostsAddedByUser = async (req, res) => {
       success: true,
       message: `Found ${posts.length ? posts?.length : 0} posts`,
       posts,
+      postsCount: posts.length,
     })
   } catch (error) {
     if (error) console.log(error)
@@ -225,6 +226,26 @@ const deletePost = async (req, res) => {
     })
   } catch (error) {
     if (error) console.log(error)
+  }
+}
+
+const editPost = async (req, res) => {
+  try {
+    const { postId, newSummary, newContent } = req.body
+    if (!(newSummary || newContent)) {
+      return res.send({ success: false, message: "new values not found" })
+    }
+    const post = await Post.findById(postId)
+    if (!post) {
+      return res.send({ success: false, message: "post not found" })
+    }
+    post.summary = newSummary
+    post.content = newContent
+    post.save({ validateBeforeSave: false })
+
+    return res.send({ success: true, message: "post updated" })
+  } catch (error) {
+    console.log(error)
   }
 }
 
@@ -281,5 +302,6 @@ export {
   deletePost,
   getPostsForPostsPage,
   getPostsAddedByUser,
+  editPost,
   searchPost,
 }

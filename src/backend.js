@@ -13,6 +13,7 @@ import verifyJWT from "./middlewares/jwt.middleware.js"
 import {
   addOneLike,
   createPost,
+  editPost,
   getPostsAddedByUser,
   getPostsForPostsPage,
   getSinglePost,
@@ -72,6 +73,7 @@ async function main() {
     app.get("/posts-by-user", getPostsAddedByUser)
     app.get("/posts", getPostsForPostsPage)
     app.get("/search-post", searchPost) // search keyword will be passed via query params
+    app.patch("/edit-post", editPost)
 
     // comment adding api
     app.post("/add-comment", addComment)
