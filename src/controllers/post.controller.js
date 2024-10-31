@@ -141,13 +141,23 @@ const getPostsForPostsPage = async (req, res) => {
         },
       },
       {
+        $lookup: {
+          from: "comments",
+          localField: "_id",
+          foreignField: "postId",
+          as: "comments",
+        },
+      },
+      {
         $addFields: {
           likesCount: { $size: "$likes" },
+          commentsCount: { $size: "$comments" },
         },
       },
       {
         $project: {
           likes: 0,
+          comments: 0,
         },
       },
     ])
