@@ -3,6 +3,9 @@
 # Live backend api
 https://poster-app-backend.onrender.com
 
+## Frontend repository
+https://github.com/mir-asif01/poster_app_fontend
+
 # Features
 - user authentication (login,register)
 - CRUD operation for posts
