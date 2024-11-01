@@ -1,4 +1,26 @@
-# Introduction
-This is the repo of my project named `Poster` a social media platform for software engineers.
+## Poster, a modern blog sharing app
 
-# currently working on this project
+# Live backend api
+https://poster-app-backend.onrender.com
+
+# Features
+- user authentication (login,register)
+- CRUD operation for posts
+- image uploading
+
+# API endpoints
+- POST(/register)
+- POST(/login)
+- GET(/users)
+- GET(/users/:id)
+- POST(/create-post)
+- GET(/posts/:id)
+- POST(/add-one-like)
+- GET(/posts)
+- GET(/search-posts)
+- PATCH(/edit-post)
+- DELETE(/post/:id)
+- POST(/add-comment)
+- GET(/comments-for-post)
+
+Thank you
