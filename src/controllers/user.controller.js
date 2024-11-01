@@ -1,3 +1,6 @@
+import mongoose from "mongoose"
+import { Likes } from "../models/likes.model.js"
+import { Post } from "../models/post.model.js"
 import { User } from "../models/user.model.js"
 import { uploadImageOnCloudinary } from "../utils/cloudinary.util.js"
 import bcrypt from "bcrypt"
@@ -67,7 +70,19 @@ const loginUser = async (req, res) => {
       return res.send({ success: false, message: "Incorrect Password..." })
     }
 
-    res.send({
+    const likes = await Likes.find({
+      likedBy: new mongoose.Types.ObjectId(user?._id),
+    })
+    const posts = await Post.find({
+      creatorId: new mongoose.Types.ObjectId(user?._id),
+    })
+
+    console.log(likes.length)
+
+    user._doc.likesCount = likes.length
+    user._doc.postsCount = posts.length
+
+    return res.send({
       success: true,
       user: user,
       message: "Login Successful...",
