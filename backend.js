@@ -7,9 +7,9 @@ import {
   loginUser,
   getAllUsers,
   getSingleUser,
-} from "./controllers/user.controller.js"
-import { upload } from "./utils/multer.util.js"
-import verifyJWT from "./middlewares/jwt.middleware.js"
+} from "./src/controllers/user.controller.js"
+import { upload } from "./src/utils/multer.util.js"
+import verifyJWT from "./src/middlewares/jwt.middleware.js"
 import {
   addOneLike,
   createPost,
@@ -19,13 +19,13 @@ import {
   getPostsForPostsPage,
   getSinglePost,
   searchPost,
-} from "./controllers/post.controller.js"
+} from "./src/controllers/post.controller.js"
 import {
   addComment,
   getAllCommentUserAdded,
   getAllComments,
   getCommentsForPostDetailsPage,
-} from "./controllers/comment.controller.js"
+} from "./src/controllers/comment.controller.js"
 
 const app = express()
 const port = 3000
